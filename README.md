@@ -58,7 +58,7 @@ After this cleanup, the repository uses two explicit benchmark tracks:
 Packet semantic results must not be described as family-complete LOAO evidence.
 
 ## Repository Layout
-
+```text
 mqtt-unknown-rejection/
 ├── README.md
 ├── spec_v1.md
@@ -100,7 +100,7 @@ mqtt-unknown-rejection/
     ├── go_no_go_memo.md
     ├── shortcut_ablation.md
     └── whitelist_blacklist_enforcement.md
-
+```
 ## Single Source of Truth
 
 The repository follows this priority order:
