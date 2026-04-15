@@ -1,0 +1,6 @@
+scenario,family,total_windows,mqtt_windows,non_mqtt_windows,attack_windows,normal_windows,dropped_windows
+mqtt_bruteforce,mqtt_bruteforce,865903,865824,79,865903,0,0
+normal,normal,79820,79791,29,0,79820,0
+scan_A,scan_A,0,0,0,0,0,5340
+scan_sU,scan_sU,0,0,0,0,0,15930
+sparta,sparta,0,0,0,0,0,71626

@@ -1,0 +1,56 @@
+feature_name,source_dataset,source_granularity,non_null_rate,non_zero_rate,constant_flag,allowed_for_classifier,allowed_for_gate,notes
+bwd_max_iat,mqtt_iot_ids2020,biflow,1.0,0.704877,False,True,False,Processed biflow baseline feature from allowed_columns.
+bwd_max_pkt_len,mqtt_iot_ids2020,biflow,1.0,1.0,False,True,False,Processed biflow baseline feature from allowed_columns.
+bwd_mean_iat,mqtt_iot_ids2020,biflow,1.0,0.704877,False,True,False,Processed biflow baseline feature from allowed_columns.
+bwd_mean_pkt_len,mqtt_iot_ids2020,biflow,1.0,1.0,False,True,False,Processed biflow baseline feature from allowed_columns.
+bwd_min_iat,mqtt_iot_ids2020,biflow,1.0,0.70487,False,True,False,Processed biflow baseline feature from allowed_columns.
+bwd_min_pkt_len,mqtt_iot_ids2020,biflow,1.0,1.0,False,True,False,Processed biflow baseline feature from allowed_columns.
+bwd_num_bytes,mqtt_iot_ids2020,biflow,1.0,1.0,False,True,False,Processed biflow baseline feature from allowed_columns.
+bwd_num_pkts,mqtt_iot_ids2020,biflow,1.0,1.0,False,True,False,Processed biflow baseline feature from allowed_columns.
+bwd_num_psh_flags,mqtt_iot_ids2020,biflow,1.0,0.687859,False,True,False,Processed biflow baseline feature from allowed_columns.
+bwd_num_rst_flags,mqtt_iot_ids2020,biflow,1.0,0.216599,False,True,False,Processed biflow baseline feature from allowed_columns.
+bwd_num_urg_flags,mqtt_iot_ids2020,biflow,1.0,0.0,True,True,False,Processed biflow baseline feature from allowed_columns.
+bwd_std_iat,mqtt_iot_ids2020,biflow,1.0,0.700227,False,True,False,Processed biflow baseline feature from allowed_columns.
+bwd_std_pkt_len,mqtt_iot_ids2020,biflow,1.0,0.688789,False,True,False,Processed biflow baseline feature from allowed_columns.
+fwd_max_iat,mqtt_iot_ids2020,biflow,1.0,0.704877,False,True,False,Processed biflow baseline feature from allowed_columns.
+fwd_max_pkt_len,mqtt_iot_ids2020,biflow,1.0,1.0,False,True,False,Processed biflow baseline feature from allowed_columns.
+fwd_mean_iat,mqtt_iot_ids2020,biflow,1.0,0.704877,False,True,False,Processed biflow baseline feature from allowed_columns.
+fwd_mean_pkt_len,mqtt_iot_ids2020,biflow,1.0,1.0,False,True,False,Processed biflow baseline feature from allowed_columns.
+fwd_min_iat,mqtt_iot_ids2020,biflow,1.0,0.70487,False,True,False,Processed biflow baseline feature from allowed_columns.
+fwd_min_pkt_len,mqtt_iot_ids2020,biflow,1.0,1.0,False,True,False,Processed biflow baseline feature from allowed_columns.
+fwd_num_bytes,mqtt_iot_ids2020,biflow,1.0,1.0,False,True,False,Processed biflow baseline feature from allowed_columns.
+fwd_num_pkts,mqtt_iot_ids2020,biflow,1.0,1.0,False,True,False,Processed biflow baseline feature from allowed_columns.
+fwd_num_psh_flags,mqtt_iot_ids2020,biflow,1.0,0.687967,False,True,False,Processed biflow baseline feature from allowed_columns.
+fwd_num_rst_flags,mqtt_iot_ids2020,biflow,1.0,0.001408,False,True,False,Processed biflow baseline feature from allowed_columns.
+fwd_num_urg_flags,mqtt_iot_ids2020,biflow,1.0,0.000108,False,True,False,Processed biflow baseline feature from allowed_columns.
+fwd_std_iat,mqtt_iot_ids2020,biflow,1.0,0.700227,False,True,False,Processed biflow baseline feature from allowed_columns.
+fwd_std_pkt_len,mqtt_iot_ids2020,biflow,1.0,0.688789,False,True,False,Processed biflow baseline feature from allowed_columns.
+direction_byte_ratio,mqtt_iot_ids2020,packet_window,1.0,0.999981,False,True,False,Computed as uplink/downlink with denominator clipped at 1.
+direction_pkt_ratio,mqtt_iot_ids2020,packet_window,1.0,0.999981,False,True,False,Computed as uplink/downlink with denominator clipped at 1.
+downlink_byte_count,mqtt_iot_ids2020,packet_window,1.0,0.999955,False,True,False,
+downlink_pkt_count,mqtt_iot_ids2020,packet_window,1.0,0.999955,False,True,False,
+max_iat,mqtt_iot_ids2020,packet_window,1.0,0.999935,False,True,False,
+max_pkt_len,mqtt_iot_ids2020,packet_window,1.0,1.0,False,True,False,
+mean_iat,mqtt_iot_ids2020,packet_window,1.0,0.999935,False,True,False,
+mean_pkt_len,mqtt_iot_ids2020,packet_window,1.0,1.0,False,True,False,
+min_iat,mqtt_iot_ids2020,packet_window,1.0,0.999865,False,True,False,
+min_pkt_len,mqtt_iot_ids2020,packet_window,1.0,1.0,False,True,False,
+missing_handshake_ratio_lite,mqtt_iot_ids2020,packet_window,1.0,3.5e-05,False,False,True,Raw semantic-lite feature. Fold-local minmax normalization is deferred to Phase 3 to avoid leakage.
+mqtt_msglen_mean,mqtt_iot_ids2020,packet_window,1.0,0.999861,False,True,False,
+mqtt_msglen_std,mqtt_iot_ids2020,packet_window,1.0,0.999665,False,True,False,
+mqtt_msgtype_entropy,mqtt_iot_ids2020,packet_window,1.0,0.999642,False,True,False,
+mqtt_pkt_count,mqtt_iot_ids2020,packet_window,1.0,0.999886,False,True,False,
+mqtt_pkt_ratio,mqtt_iot_ids2020,packet_window,1.0,0.999886,False,True,False,
+num_bytes_total,mqtt_iot_ids2020,packet_window,1.0,1.0,False,True,False,
+num_pkts_total,mqtt_iot_ids2020,packet_window,1.0,1.0,False,True,False,
+order_anomaly_ratio_lite,mqtt_iot_ids2020,packet_window,1.0,0.128052,False,False,True,Raw semantic-lite feature. Fold-local minmax normalization is deferred to Phase 3 to avoid leakage.
+reconnect_frequency,mqtt_iot_ids2020,packet_window,1.0,0.128047,False,False,True,Raw semantic-lite feature. Fold-local minmax normalization is deferred to Phase 3 to avoid leakage.
+std_iat,mqtt_iot_ids2020,packet_window,1.0,0.999765,False,True,False,
+std_pkt_len,mqtt_iot_ids2020,packet_window,1.0,0.999895,False,True,False,
+tcp_ack_count,mqtt_iot_ids2020,packet_window,1.0,0.999968,False,True,False,
+tcp_fin_count,mqtt_iot_ids2020,packet_window,1.0,0.99964,False,True,False,
+tcp_psh_count,mqtt_iot_ids2020,packet_window,1.0,0.999886,False,True,False,
+tcp_rst_count,mqtt_iot_ids2020,packet_window,1.0,0.0,True,True,False,
+tcp_syn_count,mqtt_iot_ids2020,packet_window,1.0,0.999638,False,True,False,
+uplink_byte_count,mqtt_iot_ids2020,packet_window,1.0,0.999981,False,True,False,
+uplink_pkt_count,mqtt_iot_ids2020,packet_window,1.0,0.999981,False,True,False,

@@ -1,0 +1,2 @@
+split_name,train_normal_count,train_mqtt_bruteforce_count,validation_normal_count,validation_mqtt_bruteforce_count,test_normal_count,test_mqtt_bruteforce_count,notes
+normal_mqtt_bruteforce_split,47885,519301,15966,173564,15969,173038,"Focused MQTT-native packet benchmark only; excluded scan_A, scan_sU, and sparta because broker-facing main attack windows were absent under the frozen definition."

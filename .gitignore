@@ -1,0 +1,11 @@
+# Local/raw datasets and generated data artifacts
+# Raw data are local symlinks and should not be pushed.
+data/raw/
+
+# Regenerable intermediate/processed artifacts (can be rebuilt by scripts).
+data/interim/
+data/processed/
+
+# Python cache
+__pycache__/
+*.pyc

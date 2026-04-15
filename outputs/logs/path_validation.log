@@ -1,0 +1,52 @@
+Phase 1 path validation
+Date: 2026-04-14
+Repository root: /home/ywx/ICICS2026/mqtt-unknown-rejection
+Status: PASS
+
+Repository structure:
+- [OK] configs/
+- [OK] data/raw/
+- [OK] data/interim/
+- [OK] data/processed/
+- [OK] outputs/logs/
+- [OK] outputs/tables/
+- [OK] reports/
+- [OK] src/loaders/
+
+Symlink validation:
+- [OK] data/raw/mqtt_iot_ids2020 -> /home/ywx/ICICS2026/dataset/MQTT-IoT-IDS2020/data
+- [OK] data/raw/mqtt_uad -> /home/ywx/ICICS2026/dataset/MQTT_UAD/data
+
+MQTT-IoT-IDS2020 expected files:
+- [OK] packet_features/normal.csv (116954696 bytes)
+- [OK] packet_features/scan_A.csv (12290886 bytes)
+- [OK] packet_features/scan_sU.csv (25596468 bytes)
+- [OK] packet_features/sparta.csv (2223747418 bytes)
+- [OK] packet_features/mqtt_bruteforce.csv (1138756588 bytes)
+- [OK] biflow_features/biflow_normal.csv (26444796 bytes)
+- [OK] biflow_features/biflow_scan_A.csv (4342749 bytes)
+- [OK] biflow_features/biflow_scan_sU.csv (8207177 bytes)
+- [OK] biflow_features/biflow_sparta.csv (28301124 bytes)
+- [OK] biflow_features/biflow_mqtt_bruteforce.csv (4675790 bytes)
+- [OK] pcap_files/normal.pcap
+- [OK] pcap_files/scan_A.pcap
+- [OK] pcap_files/scan_sU.pcap
+- [OK] pcap_files/sparta.pcap
+- [OK] pcap_files/mqtt_bruteforce.pcap
+
+MQTT_UAD expected files:
+- [OK] DoS.csv (34541574 bytes)
+- [OK] MitM.csv (28099946 bytes)
+- [OK] Intrusion.csv (20625178 bytes)
+
+Additional config-referenced paths:
+- [OK] data/raw/mqtt_iot_ids2020/uniflow_features/
+- [OK] data/raw/mqtt_iot_ids2020/uniflow_features/uniflow_normal.csv
+- [OK] data/raw/mqtt_iot_ids2020/uniflow_features/uniflow_scan_A.csv
+- [OK] data/raw/mqtt_iot_ids2020/uniflow_features/uniflow_scan_sU.csv
+- [OK] data/raw/mqtt_iot_ids2020/uniflow_features/uniflow_sparta.csv
+- [OK] data/raw/mqtt_iot_ids2020/uniflow_features/uniflow_mqtt_bruteforce.csv
+
+Notes:
+- The expected raw-data layout is intact.
+- The current workspace is not a git checkout (`.git` absent); this is not a Phase 1 blocker.

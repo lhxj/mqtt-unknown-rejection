@@ -1,0 +1,123 @@
+version: 1
+experiment_name: mqtt_behavior_unknown_rejection_v1
+
+primary_dataset:
+  name: mqtt_iot_ids2020
+  role: family_complete_main_benchmark
+  root: data/raw/mqtt_iot_ids2020
+
+  main_benchmark:
+    granularity: biflow_features
+    split_regime: main_loao_biflow
+    task: 4-fold_loao_unknown_rejection
+    purpose: family_complete_main_benchmark_table
+
+  focused_packet_semantic_benchmark:
+    granularity: packet_features
+    derived_sample_unit: 5-second broker-facing bidirectional endpoint window
+    split_regime: focused_packet_semantic
+    families:
+      - normal
+      - mqtt_bruteforce
+    purpose: semantic_lite_contribution_where_mqtt_behavior_hints_exist
+    limitation_note: broker-facing packet windows yielded no main attack windows for scan_A, scan_sU, or sparta under the frozen definition
+
+  sources:
+    packet_features_dir: data/raw/mqtt_iot_ids2020/packet_features
+    biflow_features_dir: data/raw/mqtt_iot_ids2020/biflow_features
+    uniflow_features_dir: data/raw/mqtt_iot_ids2020/uniflow_features
+    pcap_dir: data/raw/mqtt_iot_ids2020/pcap_files
+
+  files:
+    normal: normal.csv
+    attack_families:
+      scan_A: scan_A.csv
+      scan_sU: scan_sU.csv
+      sparta: sparta.csv
+      mqtt_bruteforce: mqtt_bruteforce.csv
+
+  packet_schema:
+    label_column: is_attack
+    time_column: timestamp
+    src_ip_column: src_ip
+    dst_ip_column: dst_ip
+    src_port_column: src_port
+    dst_port_column: dst_port
+    protocol_column: protocol
+
+  biflow_schema:
+    label_column: is_attack
+    src_ip_column: ip_src
+    dst_ip_column: ip_dst
+    src_port_column: prt_src
+    dst_port_column: prt_dst
+    protocol_column: proto
+
+  uniflow_schema:
+    label_column: is_attack
+    src_ip_column: ip_src
+    dst_ip_column: ip_dst
+    src_port_column: prt_src
+    dst_port_column: prt_dst
+    protocol_column: proto
+
+secondary_dataset:
+  name: mqtt_uad
+  role: auxiliary_only
+  root: data/raw/mqtt_uad
+
+  files:
+    dos: DoS.csv
+    mitm: MitM.csv
+    intrusion: Intrusion.csv
+
+  schema:
+    label_column: type
+    time_column: frame.time_epoch
+    src_ip_column: ip.src
+    dst_ip_column: ip.dst
+    src_port_column: tcp.srcport
+    dst_port_column: tcp.dstport
+
+  allowed_use_cases:
+    - semantic_extractability
+    - dos_sanity_check
+    - external_appendix_check
+
+windowing:
+  enabled: true
+  window_seconds: 5
+  benchmark_role: focused_packet_semantic_only
+
+  broker_context:
+    broker_ip: "192.168.1.7"
+    broker_port: 1883
+    use_broker_facing_window: true
+
+  primary_window_key:
+    - broker_ip
+    - peer_ip
+    - peer_port
+    - window_start_5s
+
+  fallback_window_key:
+    - endpoint_pair_sorted
+    - dominant_service_port
+    - direction_tag
+    - window_start_5s
+
+  mqtt_clientid_policy:
+    use_clientid_in_main_benchmark: false
+    allow_clientid_auxiliary_only: true
+
+main_protocol_rules:
+  task_type: known_class_classification_plus_unknown_rejection
+  use_only_normal_csv_as_core_normal_source: true
+  include_benign_rows_from_attack_files_in_main_table: false
+  allow_benign_rows_from_attack_files_in_robustness_check: true
+
+runtime_paths:
+  interim_dir: data/interim
+  processed_dir: data/processed
+  reports_dir: reports
+  outputs_dir: outputs

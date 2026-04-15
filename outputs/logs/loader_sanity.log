@@ -1,0 +1,48 @@
+Phase 1 loader sanity
+Date: 2026-04-14
+Status: PASS
+
+Implementation smoke test:
+- [OK] python3 -m py_compile src/loaders/common.py src/loaders/packet_loader.py src/loaders/biflow_loader.py
+
+Packet loader checks:
+- normal subset: shape = (2048, 31)
+- [OK] required packet columns present
+- [OK] label column present: is_attack
+- [OK] timestamp and endpoint columns present: timestamp, src_ip, dst_ip, src_port, dst_port
+- [OK] MQTT weak semantic columns present: mqtt_messagetype, mqtt_messagelength, mqtt_flag_clean, mqtt_flag_qos, mqtt_flag_uname, mqtt_flag_passwd, mqtt_flag_willflag
+- normal subset label counts: {0: 2048}
+- normal subset semantic non-null counts: mqtt_messagetype=617, mqtt_messagelength=617, mqtt_flag_clean=155, mqtt_flag_qos=155, mqtt_flag_uname=155, mqtt_flag_passwd=155, mqtt_flag_willflag=155
+
+- mqtt_bruteforce subset: shape = (2048, 31)
+- [OK] required packet columns present
+- [OK] label column present: is_attack
+- [OK] timestamp and endpoint columns present: timestamp, src_ip, dst_ip, src_port, dst_port
+- [OK] MQTT weak semantic columns present
+- mqtt_bruteforce subset label counts: {1: 1910, 0: 138}
+- mqtt_bruteforce subset semantic non-null counts: mqtt_messagetype=381, mqtt_messagelength=381, mqtt_flag_clean=190, mqtt_flag_qos=190, mqtt_flag_uname=190, mqtt_flag_passwd=190, mqtt_flag_willflag=190
+
+Duplicate embedded header checks through the packet loader:
+- raw duplicate header rows found earlier: normal=1, sparta=20, mqtt_bruteforce=10
+- loader scan result: normal residual duplicate rows=0 after scanning 1056230 cleaned rows
+- loader scan result: sparta residual duplicate rows=0 after scanning 20676120 cleaned rows
+- loader scan result: mqtt_bruteforce residual duplicate rows=0 after scanning 10045306 cleaned rows
+
+Biflow loader checks:
+- biflow_normal subset: shape = (2048, 32)
+- [OK] required biflow columns present
+- [OK] all configured biflow statistical columns present
+- biflow_normal subset label counts: {0: 2048}
+
+- biflow_mqtt_bruteforce subset: shape = (2048, 32)
+- [OK] required biflow columns present
+- [OK] all configured biflow statistical columns present
+- biflow_mqtt_bruteforce subset label counts: {1: 2039, 0: 9}
+
+MQTT_UAD checks:
+- DoS subset: shape = (2048, 67)
+- [OK] label column present: type
+- [OK] expected MQTT auxiliary semantic columns present: mqtt.msgtype, mqtt.qos, mqtt.topic, mqtt.kalive, mqtt.msgid, mqtt.clientid, mqtt.conflag.cleansess, mqtt.conflag.passwd, mqtt.conflag.qos, mqtt.conflag.uname, mqtt.conflag.willflag, mqtt.conack.flags, mqtt.conack.flags.sp, mqtt.conack.val
+- DoS subset label counts: {normal: 2048}
+- DoS subset semantic non-null counts are sparse in the first 2048 rows, which is expected for early non-MQTT traffic
+- full DoS file semantic non-null counts confirm availability beyond the first chunk: mqtt.msgtype=39535, mqtt.qos=38464, mqtt.topic=37737, mqtt.kalive=323, mqtt.msgid=791, mqtt.clientid=323, mqtt.conflag.cleansess=323, mqtt.conflag.passwd=323, mqtt.conflag.qos=323, mqtt.conflag.uname=323, mqtt.conflag.willflag=323, mqtt.conack.flags=770, mqtt.conack.flags.sp=770, mqtt.conack.val=770

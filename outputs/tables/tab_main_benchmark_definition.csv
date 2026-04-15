@@ -1,0 +1,4 @@
+track_name,dataset,granularity,scope,families_covered,intended_use,scientifically_valid_for_main_table,notes
+main_loao_biflow,mqtt_iot_ids2020,biflow_features,family_complete_4_fold_loao_unknown_rejection,normal|scan_A|scan_sU|sparta|mqtt_bruteforce,main benchmark table,yes,Family-complete after Phase 2.5 cleanup; manifests reference processed biflow matrices.
+focused_packet_semantic,mqtt_iot_ids2020,broker_facing_packet_windows,focused_mqtt_native_semantic_benchmark,normal|mqtt_bruteforce,focused semantic-lite contribution analysis,no,"scan_A, scan_sU, and sparta had 0 main broker-facing packet attack windows under the frozen definition."
+mqtt_uad_auxiliary_semantic,mqtt_uad,packet_csv_auxiliary,semantic_extractability_and_dos_sanity_only,DoS auxiliary only,auxiliary semantic sanity support,no,MQTT_UAD remains auxiliary only and is not promoted to the main benchmark.

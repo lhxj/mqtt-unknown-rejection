@@ -1,0 +1,5 @@
+fold_name,train_window_count,validation_window_count,test_normal_window_count,test_heldout_attack_window_count,seen_family_counts,heldout_family_name
+holdout_scan_A,740879,188875,15969,0,"{""mqtt_bruteforce"": 865903, ""scan_sU"": 0, ""sparta"": 0}",scan_A
+holdout_scan_sU,740154,189600,15969,0,"{""mqtt_bruteforce"": 865903, ""scan_A"": 0, ""sparta"": 0}",scan_sU
+holdout_sparta,740778,188976,15969,0,"{""mqtt_bruteforce"": 865903, ""scan_A"": 0, ""scan_sU"": 0}",sparta
+holdout_mqtt_bruteforce,47885,15966,15969,865903,"{""scan_A"": 0, ""scan_sU"": 0, ""sparta"": 0}",mqtt_bruteforce

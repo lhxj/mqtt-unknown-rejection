@@ -1,0 +1,190 @@
+version: 1
+
+preprocessing:
+  drop_constant_columns: true
+  drop_all_null_columns: true
+  drop_duplicate_header_rows: true
+  drop_high_missing_columns: false
+  high_missing_threshold: 0.98
+  impute_numeric: median
+  impute_categorical: most_frequent
+
+# 这里表示“禁止进入主分类器”，不是“加载后立刻从原始数据删除”
+classifier_blacklist:
+  - is_attack
+  - type
+  - src_ip
+  - dst_ip
+  - ip_src
+  - ip_dst
+  - ip.src
+  - ip.dst
+  - eth.src
+  - eth.dst
+  - timestamp
+  - frame.time_epoch
+  - frame.time_relative
+  - frame.time_delta
+  - frame.time_delta_displayed
+  - frame.number
+  - protocol
+  - proto
+  - file_id
+  - scenario_id
+  - fold_id
+
+grouping_only_fields:
+  - src_ip
+  - dst_ip
+  - src_port
+  - dst_port
+  - ip_src
+  - ip_dst
+  - prt_src
+  - prt_dst
+  - ip.src
+  - ip.dst
+  - tcp.srcport
+  - tcp.dstport
+  - timestamp
+  - frame.time_epoch
+  - mqtt.clientid
+
+packet_window_stats:
+  enabled: true
+
+  required_grouping_context:
+    - timestamp
+    - src_ip
+    - dst_ip
+    - src_port
+    - dst_port
+
+  raw_numeric_sources:
+    - ip_len
+    - mqtt_messagelength
+    - tcp_flag_ack
+    - tcp_flag_push
+    - tcp_flag_reset
+    - tcp_flag_syn
+    - tcp_flag_fin
+
+  raw_categorical_sources:
+    - mqtt_messagetype
+
+  derived_features:
+    - num_pkts_total
+    - num_bytes_total
+    - mean_pkt_len
+    - std_pkt_len
+    - min_pkt_len
+    - max_pkt_len
+    - mean_iat
+    - std_iat
+    - min_iat
+    - max_iat
+    - tcp_ack_count
+    - tcp_syn_count
+    - tcp_fin_count
+    - tcp_rst_count
+    - tcp_psh_count
+    - mqtt_pkt_count
+    - mqtt_pkt_ratio
+    - mqtt_msgtype_entropy
+    - mqtt_msglen_mean
+    - mqtt_msglen_std
+    - uplink_pkt_count
+    - downlink_pkt_count
+    - uplink_byte_count
+    - downlink_byte_count
+    - direction_pkt_ratio
+    - direction_byte_ratio
+
+biflow_stats:
+  enabled: true
+
+  allowed_columns:
+    - fwd_num_pkts
+    - bwd_num_pkts
+    - fwd_num_bytes
+    - bwd_num_bytes
+    - fwd_mean_iat
+    - bwd_mean_iat
+    - fwd_std_iat
+    - bwd_std_iat
+    - fwd_min_iat
+    - bwd_min_iat
+    - fwd_max_iat
+    - bwd_max_iat
+    - fwd_mean_pkt_len
+    - bwd_mean_pkt_len
+    - fwd_std_pkt_len
+    - bwd_std_pkt_len
+    - fwd_min_pkt_len
+    - bwd_min_pkt_len
+    - fwd_max_pkt_len
+    - bwd_max_pkt_len
+    - fwd_num_psh_flags
+    - bwd_num_psh_flags
+    - fwd_num_rst_flags
+    - bwd_num_rst_flags
+    - fwd_num_urg_flags
+    - bwd_num_urg_flags
+
+semantic_lite:
+  enabled: true
+
+  main_features:
+    - reconnect_frequency
+    - order_anomaly_ratio_lite
+    - missing_handshake_ratio_lite
+
+  auxiliary_only:
+    - qos_mismatch_ratio_aux
+
+  postponed:
+    - keepalive_violation_count
+
+  main_raw_inputs_primary:
+    - mqtt_messagetype
+    - mqtt_messagelength
+    - mqtt_flag_clean
+    - mqtt_flag_qos
+    - mqtt_flag_uname
+    - mqtt_flag_passwd
+    - mqtt_flag_willflag
+
+  auxiliary_raw_inputs_secondary:
+    - mqtt.msgtype
+    - mqtt.qos
+    - mqtt.topic
+    - mqtt.kalive
+    - mqtt.msgid
+    - mqtt.clientid
+    - mqtt.conflag.cleansess
+    - mqtt.conflag.passwd
+    - mqtt.conflag.qos
+    - mqtt.conflag.uname
+    - mqtt.conflag.willflag
+    - mqtt.conack.flags
+    - mqtt.conack.flags.sp
+    - mqtt.conack.val
+
+  feature_usage_policy:
+    classifier_uses_semantic_features: false
+    gate_uses_semantic_features: true
+    extractor_can_use_grouping_fields: true
+
+  normalization:
+    normalize_each_semantic_feature: true
+    method: minmax
+
+  sparsity_policy:
+    allow_sparse_inputs: true
+    warn_below_non_null_rate: 0.01
+    drop_if_all_zero_or_all_null: true
+
+leakage_checks:
+  enabled: true
+  must_report_removed_fields: true
+  must_run_shortcut_ablation: true

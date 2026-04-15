@@ -1,0 +1,51 @@
+Phase 1 config validation
+Date: 2026-04-14
+Status: PASS with documented cautions
+
+Validated files:
+- configs/data.yaml
+- configs/features.yaml
+- configs/split.yaml
+- configs/gate.yaml
+- configs/edge.yaml
+
+configs/data.yaml:
+- [OK] primary_dataset root and source directories resolve to existing paths
+- [OK] packet schema columns exist in packet_features headers: timestamp, src_ip, dst_ip, src_port, dst_port, protocol, is_attack
+- [OK] biflow schema columns exist in biflow_features headers: ip_src, ip_dst, prt_src, prt_dst, proto, is_attack
+- [OK] uniflow schema columns exist in uniflow_features headers: ip_src, ip_dst, prt_src, prt_dst, proto, is_attack
+- [OK] secondary dataset schema columns exist in MQTT_UAD headers: type, frame.time_epoch, ip.src, ip.dst, tcp.srcport, tcp.dstport
+- [OK] runtime paths referenced by the config exist
+
+configs/features.yaml:
+- [OK] classifier_blacklist entries are internally consistent with the observed raw schemas
+- [OK] grouping_only_fields all exist in current raw schemas
+- [OK] packet_window_stats required grouping context exists in packet_features
+- [OK] packet_window_stats raw numeric/categorical inputs exist in packet_features
+- [OK] biflow_stats.allowed_columns all exist in biflow_features
+- [OK] semantic_lite.main_raw_inputs_primary all exist in packet_features
+- [OK] semantic_lite.auxiliary_raw_inputs_secondary all exist in MQTT_UAD
+- [NOTE] blacklist placeholders file_id, scenario_id, and fold_id are not present in current raw CSV headers; this is acceptable because they are derived metadata placeholders, not missing raw columns
+- [NOTE] 52 raw fields are present but not explicitly categorized by features.yaml; for Phase 1 they remain loader-visible only and must not be promoted into the classifier matrix without an explicit config change
+- [NOTE] packet-side uncategorized fields relevant to the main benchmark are: ttl, ip_flag_df, ip_flag_mf, ip_flag_rb, tcp_flag_res, tcp_flag_ns, tcp_flag_cwr, tcp_flag_ecn, tcp_flag_urg, mqtt_flag_retain, mqtt_flag_reserved
+- [NOTE] remaining uncategorized fields are MQTT_UAD frame/payload metadata and stay outside the classifier by default
+
+configs/split.yaml:
+- [OK] LOAO holdout families exactly match the available attack families: scan_A, scan_sU, sparta, mqtt_bruteforce
+- [OK] normal_source.file points to an existing packet_features file: normal.csv
+- [OK] secondary dataset policy matches the available MQTT_UAD files: DoS.csv, MitM.csv, Intrusion.csv
+- [NOTE] split/grouping fields peer_ip, peer_port, family, and known_label are post-windowing derived fields, so they are not expected to exist in raw CSV headers during Phase 1
+
+configs/gate.yaml:
+- [OK] semantic score feature names match configs/features.yaml main semantic features
+- [OK] semantic score weights sum to 1.0
+- [OK] declared gate modes are internally consistent: closed, confidence_only, semantic_only, joint
+- [NOTE] LightGBM training is intentionally not exercised in Phase 1
+
+configs/edge.yaml:
+- [OK] replay.source_dir exists: data/raw/mqtt_iot_ids2020/pcap_files
+- [OK] replay.target_scenarios match the available packet/pcap scenario names
+- [OK] logging/export parent directories exist
+
+Config edits applied:
+- None. No unambiguous config correction was required in Phase 1.

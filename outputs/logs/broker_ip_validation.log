@@ -1,0 +1,27 @@
+Phase 1 broker IP validation
+Date: 2026-04-14
+Status: CONFIRMED
+
+Config under test:
+- configs/data.yaml windowing.broker_context.broker_ip = 192.168.1.7
+- configs/data.yaml windowing.broker_context.broker_port = 1883
+
+Method:
+1. Inspect MQTT-IoT-IDS2020 packet_features CSVs.
+2. Filter rows where src_port == 1883 or dst_port == 1883.
+3. Count the broker-side IP candidate from src_ip when src_port == 1883 and from dst_ip when dst_port == 1883.
+
+Observed broker-side IP counts:
+- normal: total 1883 rows = 906412; top candidate = 192.168.1.7 (906412 / 100.00%)
+- scan_A: total 1883 rows = 64022; top candidate = 192.168.1.7 (64022 / 100.00%)
+- scan_sU: total 1883 rows = 191060; top candidate = 192.168.1.7 (191060 / 100.00%)
+- sparta: total 1883 rows = 693157; top candidate = 192.168.1.7 (693157 / 100.00%)
+- mqtt_bruteforce: total 1883 rows = 8183214; top candidate = 192.168.1.7 (8183214 / 100.00%)
+
+Interpretation:
+- The stable broker-facing MQTT endpoint is 192.168.1.7 across every scenario when restricted to broker port 1883.
+- mqtt_bruteforce.csv contains other traffic early in the file (for example DNS rows involving 192.168.2.1), but those rows are outside the 1883-based broker test and do not contradict the broker candidate.
+
+Decision:
+- Keep broker_ip = 192.168.1.7.
+- No config update was needed.

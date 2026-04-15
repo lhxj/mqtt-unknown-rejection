@@ -1,0 +1,16 @@
+Phase 2.5 benchmark cleanup summary
+
+Historical packet LOAO manifests retained as historical artifacts only.
+Current benchmark tracks:
+- main_loao_biflow
+- focused_packet_semantic
+[main_loao_biflow]
+source=data/processed/biflow
+
+holdout_scan_A: train_normal=51604, train_seen_attack=40877, validation_normal=17201, validation_seen_attack=10217, test_normal=17203, test_heldout_attack=19907, normal_group_overlap=0, seen_group_overlap=0
+holdout_scan_sU: train_normal=51604, train_seen_attack=38855, validation_normal=17201, validation_seen_attack=9712, test_normal=17203, test_heldout_attack=22434, normal_group_overlap=0, seen_group_overlap=0
+holdout_sparta: train_normal=51604, train_seen_attack=45510, validation_normal=17201, validation_seen_attack=11375, test_normal=17203, test_heldout_attack=14116, normal_group_overlap=0, seen_group_overlap=0
+holdout_mqtt_bruteforce: train_normal=51604, train_seen_attack=45167, validation_normal=17201, validation_seen_attack=11290, test_normal=17203, test_heldout_attack=14544, normal_group_overlap=0, seen_group_overlap=0
+
+[focused_packet_semantic]
+normal_mqtt_bruteforce_split: train_normal=47885, train_mqtt_bruteforce=519301, validation_normal=15966, validation_mqtt_bruteforce=173564, test_normal=15969, test_mqtt_bruteforce=173038, normal_group_overlap=0, mqtt_group_overlap=0

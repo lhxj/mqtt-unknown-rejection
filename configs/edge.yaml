@@ -1,0 +1,66 @@
+version: 1
+
+platform:
+  name: bpi_f3
+  soc: spacemit_k1
+  role: representative_riscv_edge_gateway_prototype
+
+replay:
+  enabled: true
+  mode: pcap_replay
+
+  source_dir: data/raw/mqtt_iot_ids2020/pcap_files
+  target_scenarios:
+    - normal
+    - scan_A
+    - scan_sU
+    - sparta
+    - mqtt_bruteforce
+
+  replay_rate: 1.0
+  loop_count: 1
+  warmup_seconds: 10
+
+pipeline:
+  full_chain_required: true
+  stages:
+    - replay_input
+    - flow_or_window_rebuild
+    - feature_extraction
+    - model_inference
+    - rejection
+    - alerting
+
+profiling:
+  enabled: true
+
+  profile_window_seconds: 60
+  metrics_sampling_interval_seconds: 1
+  stage_level_timing: true
+
+  collect_metrics:
+    - throughput_windows_per_sec
+    - throughput_packets_per_sec
+    - p50_latency_ms
+    - p95_latency_ms
+    - cpu_percent
+    - ram_mb
+    - replay_drop_rate
+    - alert_latency_ms
+
+runtime_limits:
+  target_p95_latency_seconds_max: 1.0
+  target_ram_gb_max: 2.0
+
+logging:
+  enabled: true
+  log_level: info
+  export_dir: outputs/checkpoints
+  runtime_table_path: outputs/tables/tab_edge_runtime.csv
+  latency_breakdown_figure_path: outputs/figures/fig_edge_latency_breakdown.pdf
+  profiling_log_path: outputs/logs/edge_replay_profile.log
+
+reporting:
+  write_stage_breakdown: true
+  write_system_usage_summary: true
+  write_go_no_go_inputs: true

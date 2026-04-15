@@ -1,0 +1,95 @@
+version: 1
+
+classifier:
+  name: lightgbm
+  confidence_proxy: pmax
+
+gate_modes:
+  - closed
+  - confidence_only
+  - semantic_only
+  - joint
+
+mode_definitions:
+  closed:
+    rejection_enabled: false
+    score_definition: null
+
+  confidence_only:
+    rejection_enabled: true
+    score_definition: "u = 1 - pmax"
+
+  semantic_only:
+    rejection_enabled: true
+    score_definition: "u = s_sem"
+
+  joint:
+    rejection_enabled: true
+    score_definition: "u = alpha * (1 - pmax) + beta * s_sem"
+
+semantic_score:
+  enabled: true
+
+  features:
+    reconnect_frequency: 0.4
+    order_anomaly_ratio_lite: 0.4
+    missing_handshake_ratio_lite: 0.2
+
+  aggregation:
+    method: weighted_sum
+    normalize_input_features: true
+    require_weights_sum_to_one: true
+
+joint_gate:
+  enabled: true
+  alpha: 0.6
+  beta: 0.4
+  freeze_alpha_beta: true
+
+threshold_search:
+  enabled: true
+  validation_source: normal_and_seen_families_validation
+  search_per_fold: true
+  target_metric: h_score
+
+  search_space:
+    tau_min: 0.05
+    tau_max: 0.95
+    tau_step: 0.02
+
+  secondary_constraints:
+    max_known_macro_f1_drop: 0.05
+
+ablation_requirements:
+  must_run:
+    - confidence_only
+    - semantic_only
+    - joint
+
+  must_compare_against:
+    - packet_stats_confidence_only
+    - biflow_stats_confidence_only
+
+success_criteria:
+  internal_stretch:
+    avg_unknown_recall_min: 0.65
+    avg_h_score_min: 0.70
+    min_joint_hscore_gain_over_confidence_only: 0.05
+    min_mqtt_bf_fold_unknown_recall_gain: 0.10
+    max_known_macro_f1_drop: 0.05
+    edge_p95_latency_seconds_max: 1.0
+    edge_ram_gb_max: 2.0
+
+  minimum_continue_writing:
+    require_stable_positive_joint_gain: true
+    require_nonnegative_mqtt_bf_fold_gain: true
+    require_story_survives_shortcut_ablation: true
+    require_end_to_end_replay_pipeline_runs: true
+
+failure_triggers:
+  avg_unknown_recall_below: 0.50
+  avg_h_score_below: 0.60
+  joint_gain_below: 0.03
+  mqtt_bf_fold_nonpositive_gain: true
+  shortcut_ablation_collapse: true
+  replay_pipeline_cannot_keep_up: true

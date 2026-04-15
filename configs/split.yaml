@@ -1,0 +1,142 @@
+version: 2
+random_seed: 1
+
+main_loao_biflow:
+  strategy: loao
+  split_stage: after_biflow_matrix_assembly
+  no_raw_row_split: true
+  source:
+    dataset: mqtt_iot_ids2020
+    granularity: biflow_processed
+    processed_dir: data/processed/biflow
+    manifest_dir: data/processed/splits/main_loao_biflow
+    files:
+      normal: biflow_normal.parquet
+      attack_families:
+        scan_A: biflow_scan_A.parquet
+        scan_sU: biflow_scan_sU.parquet
+        sparta: biflow_sparta.parquet
+        mqtt_bruteforce: biflow_mqtt_bruteforce.parquet
+    grouping_support:
+      use_raw_biflow_alignment: true
+      raw_group_columns:
+        - ip_src
+        - ip_dst
+        - prt_src
+        - prt_dst
+        - proto
+
+  normal_source:
+    family_label: normal
+    partition:
+      enabled: true
+      method: grouped_random
+      group_key: endpoint_biflow
+      train_fraction: 0.6
+      validation_fraction: 0.2
+      test_fraction: 0.2
+
+  seen_family_partition:
+    enabled: true
+    method: grouped_random
+    group_key: endpoint_biflow
+    validation_fraction: 0.2
+    prevent_same_group_across_partitions: true
+
+  folds:
+    - name: holdout_scan_A
+      holdout_family: scan_A
+      seen_families:
+        - scan_sU
+        - sparta
+        - mqtt_bruteforce
+
+    - name: holdout_scan_sU
+      holdout_family: scan_sU
+      seen_families:
+        - scan_A
+        - sparta
+        - mqtt_bruteforce
+
+    - name: holdout_sparta
+      holdout_family: sparta
+      seen_families:
+        - scan_A
+        - scan_sU
+        - mqtt_bruteforce
+
+    - name: holdout_mqtt_bruteforce
+      holdout_family: mqtt_bruteforce
+      seen_families:
+        - scan_A
+        - scan_sU
+        - sparta
+
+  test_protocol:
+    includes:
+      - heldout_family_rows
+      - normal_test_partition
+    heldout_family_must_be_unseen_before_test: true
+    normal_test_partition_must_be_unseen_before_test: true
+
+focused_packet_semantic:
+  strategy: fixed_family_split
+  split_stage: after_windowing
+  source:
+    dataset: mqtt_iot_ids2020
+    granularity: packet_windows
+    processed_dir: data/interim/windows/packet
+    manifest_dir: data/processed/splits/focused_packet_semantic
+    files:
+      normal: normal_windows.parquet
+      mqtt_bruteforce: mqtt_bruteforce_attack_windows.parquet
+
+  families:
+    - normal
+    - mqtt_bruteforce
+
+  scientific_role: focused_mqtt_native_semantic_benchmark
+  not_valid_for_family_complete_loao: true
+
+  partition:
+    enabled: true
+    method: grouped_random
+    group_by:
+      - peer_ip
+      - peer_port
+    train_fraction: 0.6
+    validation_fraction: 0.2
+    test_fraction: 0.2
+    prevent_same_group_across_partitions: true
+
+  notes:
+    - scan_A, scan_sU, and sparta are excluded because their main broker-facing packet attack windows are absent under the frozen definition
+    - this split is for focused semantic-lite contribution analysis only and must not be framed as family-complete LOAO evidence
+
+family_labels:
+  normal: normal
+  scan_A: scan_A
+  scan_sU: scan_sU
+  sparta: sparta
+  mqtt_bruteforce: mqtt_bruteforce
+
+historical_artifacts:
+  packet_loao_phase2:
+    status: historical_only
+    scientifically_valid_current_main_benchmark: false
+    paths:
+      - data/processed/splits/holdout_scan_A.json
+      - data/processed/splits/holdout_scan_sU.json
+      - data/processed/splits/holdout_sparta.json
+      - data/processed/splits/holdout_mqtt_bruteforce.json
+
+secondary_dataset_policy:
+  mqtt_uad:
+    split_style: auxiliary_only
+    primary_aux_file: DoS.csv
+    optional_files:
+      - MitM.csv
+      - Intrusion.csv
+    use_as_main_loao_benchmark: false
+    allow_extractability_checks_on_all_files: true
+    run_dos_sanity_check: true

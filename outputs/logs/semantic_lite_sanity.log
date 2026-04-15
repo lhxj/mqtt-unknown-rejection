@@ -1,0 +1,17 @@
+Semantic-lite sanity summary
+
+semantic_feature_count=3
+all_zero_semantic_features=none
+sparse_semantic_windows=395
+
+[mqtt_bruteforce]
+reconnect_frequency: non_zero_rate=0.139851, non_null_rate=1.000000, mean=0.031046
+order_anomaly_ratio_lite: non_zero_rate=0.139856, non_null_rate=1.000000, mean=0.036193
+missing_handshake_ratio_lite: non_zero_rate=0.000030, non_null_rate=1.000000, mean=0.000026
+sparse_semantic_windows=337
+
+[normal]
+reconnect_frequency: non_zero_rate=0.000000, non_null_rate=1.000000, mean=0.000000
+order_anomaly_ratio_lite: non_zero_rate=0.000000, non_null_rate=1.000000, mean=0.000000
+missing_handshake_ratio_lite: non_zero_rate=0.000088, non_null_rate=1.000000, mean=0.000088
+sparse_semantic_windows=58

@@ -1,0 +1,5 @@
+fold_name,train_normal_count,train_seen_attack_count,validation_normal_count,validation_seen_attack_count,test_normal_count,test_heldout_attack_count,heldout_family
+holdout_scan_A,51604,40877,17201,10217,17203,19907,scan_A
+holdout_scan_sU,51604,38855,17201,9712,17203,22434,scan_sU
+holdout_sparta,51604,45510,17201,11375,17203,14116,sparta
+holdout_mqtt_bruteforce,51604,45167,17201,11290,17203,14544,mqtt_bruteforce

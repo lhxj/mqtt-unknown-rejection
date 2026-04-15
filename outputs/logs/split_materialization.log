@@ -1,0 +1,42 @@
+LOAO split materialization summary
+
+[holdout_scan_A]
+heldout_family=scan_A
+seen_families=scan_sU, sparta, mqtt_bruteforce
+train_window_count=740879
+validation_window_count=188875
+test_normal_window_count=15969
+test_heldout_attack_window_count=0
+normal_group_overlap_count=0
+seen_group_overlap_count=0
+
+[holdout_scan_sU]
+heldout_family=scan_sU
+seen_families=scan_A, sparta, mqtt_bruteforce
+train_window_count=740154
+validation_window_count=189600
+test_normal_window_count=15969
+test_heldout_attack_window_count=0
+normal_group_overlap_count=0
+seen_group_overlap_count=0
+
+[holdout_sparta]
+heldout_family=sparta
+seen_families=scan_A, scan_sU, mqtt_bruteforce
+train_window_count=740778
+validation_window_count=188976
+test_normal_window_count=15969
+test_heldout_attack_window_count=0
+normal_group_overlap_count=0
+seen_group_overlap_count=0
+
+[holdout_mqtt_bruteforce]
+heldout_family=mqtt_bruteforce
+seen_families=scan_A, scan_sU, sparta
+train_window_count=47885
+validation_window_count=15966
+test_normal_window_count=15969
+test_heldout_attack_window_count=865903
+normal_group_overlap_count=0
+seen_group_overlap_count=0
+

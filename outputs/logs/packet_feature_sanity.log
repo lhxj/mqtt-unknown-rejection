@@ -1,0 +1,31 @@
+Packet feature sanity summary
+
+packet_feature_count=26
+constant_packet_features=tcp_rst_count
+
+num_pkts_total: non_null_rate=1.0, non_zero_rate=1.0, constant=False
+num_bytes_total: non_null_rate=1.0, non_zero_rate=1.0, constant=False
+mean_pkt_len: non_null_rate=1.0, non_zero_rate=1.0, constant=False
+std_pkt_len: non_null_rate=1.0, non_zero_rate=0.999895, constant=False
+min_pkt_len: non_null_rate=1.0, non_zero_rate=1.0, constant=False
+max_pkt_len: non_null_rate=1.0, non_zero_rate=1.0, constant=False
+mean_iat: non_null_rate=1.0, non_zero_rate=0.999935, constant=False
+std_iat: non_null_rate=1.0, non_zero_rate=0.999765, constant=False
+min_iat: non_null_rate=1.0, non_zero_rate=0.999865, constant=False
+max_iat: non_null_rate=1.0, non_zero_rate=0.999935, constant=False
+tcp_ack_count: non_null_rate=1.0, non_zero_rate=0.999968, constant=False
+tcp_syn_count: non_null_rate=1.0, non_zero_rate=0.999638, constant=False
+tcp_fin_count: non_null_rate=1.0, non_zero_rate=0.99964, constant=False
+tcp_rst_count: non_null_rate=1.0, non_zero_rate=0.0, constant=True
+tcp_psh_count: non_null_rate=1.0, non_zero_rate=0.999886, constant=False
+mqtt_pkt_count: non_null_rate=1.0, non_zero_rate=0.999886, constant=False
+mqtt_pkt_ratio: non_null_rate=1.0, non_zero_rate=0.999886, constant=False
+mqtt_msgtype_entropy: non_null_rate=1.0, non_zero_rate=0.999642, constant=False
+mqtt_msglen_mean: non_null_rate=1.0, non_zero_rate=0.999861, constant=False
+mqtt_msglen_std: non_null_rate=1.0, non_zero_rate=0.999665, constant=False
+uplink_pkt_count: non_null_rate=1.0, non_zero_rate=0.999981, constant=False
+downlink_pkt_count: non_null_rate=1.0, non_zero_rate=0.999955, constant=False
+uplink_byte_count: non_null_rate=1.0, non_zero_rate=0.999981, constant=False
+downlink_byte_count: non_null_rate=1.0, non_zero_rate=0.999955, constant=False
+direction_pkt_ratio: non_null_rate=1.0, non_zero_rate=0.999981, constant=False
+direction_byte_ratio: non_null_rate=1.0, non_zero_rate=0.999981, constant=False
